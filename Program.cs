@@ -1,5 +1,5 @@
-﻿using HospilalConsoleApp.Database;
-using HospilalConsoleApp.Output;
+﻿using HospitalConsoleApp.Database;
+using HospitalConsoleApp.Output;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 

@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospilalConsoleApp.Database
+namespace HospitalConsoleApp.Database;
+
+public class DatabaseFunctions
 {
-    public class DatabaseFunctions
-    {
-    }
 }
