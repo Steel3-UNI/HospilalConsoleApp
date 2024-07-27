@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace HospitalConsoleApp.Output;
 
-public class PrintAlldoctors
+public class PrintAllDoctors
 {
 }

@@ -28,12 +28,12 @@ public class AppointmentRepo : Repository<Appointment>
 
     public IEnumerable<Appointment> GetAppointmentByPerson(Person person)
     {
-        return hospitalContext.appointments.ToList();
+        return hospitalContext.Appointments.ToList();
     }
 
     public IEnumerable<Appointment> GetAllAppointments()
     {
         //return hospitalContext.People.Include(p => p.Name).Include(p => p.Email).Include(p => p.Phone).Include(p => p.Address).ToList();
-        return hospitalContext.appointments.ToList();
+        return hospitalContext.Appointments.ToList();
     }
 }

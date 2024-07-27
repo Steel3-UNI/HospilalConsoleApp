@@ -20,16 +20,16 @@ public class PersonRepo : Repository<Person>
 
     public Person GetPersonById(int id)
     {
-        return hospitalContext.People.Include(p => p.Name).Include(p => p.Email).Include(p => p.Phone).Include(p => p.Address).SingleOrDefault(p => p.Id == id);
+        return hospitalContext.People.SingleOrDefault(p => p.Id == id);
     }
 
     public IEnumerable<Person> GetPeopleByRole(RolesEnum role)
     {
-        return hospitalContext.People.Include(p => p.Name).Include(p => p.Email).Include(p => p.Phone).Include(p => p.Address).Where(p => p.Role == role).ToList();
+        return hospitalContext.People.Where(p => p.Role == role).ToList();
     }
 
     public IEnumerable<Person> GetAllPeople()
     {
-        return hospitalContext.People.Include(p => p.Name).Include(p => p.Email).Include(p => p.Phone).Include(p => p.Address).ToList();
+        return hospitalContext.People.ToList();
     }
 }

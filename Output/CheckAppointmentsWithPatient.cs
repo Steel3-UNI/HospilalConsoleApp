@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace HospitalConsoleApp.Output;
 
-public class CheckAppointmentsWitrhPatient
+public class CheckAppointmentsWithPatient
 {
 }

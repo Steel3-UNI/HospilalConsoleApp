@@ -11,7 +11,7 @@ namespace HospitalConsoleApp.Database;
 
 public class HospitalContext : DbContext
 {
-    public DbSet<Appointment> appointments;
+    public DbSet<Appointment> Appointments { get; set; }
     public DbSet<Person> People { get; set; }
     public string DbPath { get; }
 
@@ -19,7 +19,7 @@ public class HospitalContext : DbContext
     {
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
-        DbPath = Path.Join(path, "library.db");
+        DbPath = Path.Join(path, "Hospital.db");
         Console.WriteLine("Database path:" + DbPath);
     }
 

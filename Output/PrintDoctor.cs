@@ -9,11 +9,11 @@ namespace HospitalConsoleApp.Output;
 
 public class PrintDoctor
 {
-    static void PrintDoctor(Doctor doctor, bool isSelf)
+    public static void PrintDoctorInfo(Doctor doctor, bool isSelf)
     {
         BaseConsoleCommands.Header(isSelf ? "My Details" : "My Doctor");
         Console.WriteLine(isSelf ? "": "\nMy Doctor");
         Console.WriteLine();
-        Console.WriteLine()
+        Console.WriteLine();
     }
 }

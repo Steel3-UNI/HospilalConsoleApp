@@ -1,5 +1,6 @@
 ﻿using HospitalConsoleApp.Hospital.Appointments;
 using HospitalConsoleApp.Hospital.People;
+using HospitalConsoleApp.Output;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,6 +99,17 @@ public class HospitalService
         }
     }
 
+    public Person GetPersonById(int id)
+    {
+        return _personRepository.GetPersonById(id); // Retrieve a person by its id
+    }
+
+    public void Run()
+    {
+        SeedData();
+        Login.Logon(this);
+    }
+
     public void SeedData()
     {
         // Delete all persons and appointments
@@ -109,17 +121,17 @@ public class HospitalService
         int person2Id = AddPerson("10002", "Injur Ree", RolesEnum.Patient);
         int person3Id = AddPerson("10003", "Tooth Hurty", RolesEnum.Patient);
         int person4Id = AddPerson("10004", "Joe Rogan", RolesEnum.Patient);
-        int person5Id = AddPerson("10005", "Doanld Trump", RolesEnum.Patient);
+        int person5Id = AddPerson("10005", "Donald Trump", RolesEnum.Patient);
         int person6Id = AddPerson("10006", "David Patientson", RolesEnum.Patient);
         int person7Id = AddPerson("20001", "Jack Doctorson", RolesEnum.Doctor);
-        int person8Id = AddPerson("20002", "Louis Vilella", RolesEnum.Doctor);
-        int person9Id = AddPerson("20003", "MyParentsHopes AndDremas", RolesEnum.Doctor);
+        int person8Id = AddPerson("20002", "Louis Villella", RolesEnum.Doctor);
+        int person9Id = AddPerson("20003", "MyParentsHopes AndDreams", RolesEnum.Doctor);
         int person10Id = AddPerson("11111", "Admin Ostrator", RolesEnum.Admin);
 
 
 
-        // Display appointments and persons
-        DisplayAppointments();
-        DisplayPersons();
+        //// Display appointments and persons
+        //DisplayAppointments();
+        //DisplayPersons();
     }
 }

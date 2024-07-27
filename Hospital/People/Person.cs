@@ -1,5 +1,8 @@
-﻿using System;
+﻿using HospitalConsoleApp.Output;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +21,7 @@ public abstract class Person
         Address = address;
     }
 
+    [Key]
     public int Id { get; set; }
 
     public string Name { get; set; }
@@ -30,17 +34,17 @@ public abstract class Person
 
     public string Address { get; set; }
 
-    public abstract void PrintMenu();
+    public abstract void Menu();
 
     public abstract void ViewDetails();
 
     public void Logout()
     {
-
+        BaseConsoleCommands.Logout();
     }
 
     public void Exit()
     {
-
+        Environment.Exit(0);
     }
 }
