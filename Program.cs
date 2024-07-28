@@ -18,7 +18,5 @@ static void Main()
     // Retrieve instances of services and repositories
     HospitalService service = serviceProvider.GetService<HospitalService>();       // Retrieve HospitalService instance
 
-    BaseConsoleCommands.Header("Main Menu"); // Display the main menu header
-
     service.Run();
 }

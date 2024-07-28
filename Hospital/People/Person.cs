@@ -1,4 +1,6 @@
-﻿using HospitalConsoleApp.Output;
+﻿using HospitalConsoleApp.Database;
+using HospitalConsoleApp.Hospital.Appointments;
+using HospitalConsoleApp.Output;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -34,9 +36,16 @@ public abstract class Person
 
     public string Address { get; set; }
 
+    public HospitalService _service;
+
     public abstract void Menu(Database.HospitalService service);
 
     public abstract void ViewDetails();
+
+    public IEnumerable<Appointment> GetAppointments()
+    {
+        return _service.GetAppointments().Where(a => a.Patient.Id == Id || a.Doctor.Id == Id);
+    }
 
     public void Logout()
     {

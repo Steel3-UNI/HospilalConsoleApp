@@ -9,9 +9,7 @@ namespace HospitalConsoleApp.Hospital.Appointments;
 
 public class Appointment
 {
-    public Appointment()
-    {
-    }
+    public Appointment() { }
 
     public Appointment(Patient p, Doctor d, string desc) 
     {
@@ -28,5 +26,10 @@ public class Appointment
     public Doctor Doctor { get; set; }
 
     public string Description { get; set; }
+
+    public void Print()
+    {
+        Console.WriteLine($"{Doctor.Name,-20} | {Patient.Name,-20} | {Description}");
+    }
 
 }

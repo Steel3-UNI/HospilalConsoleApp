@@ -2,6 +2,8 @@
 using HospitalConsoleApp.Output;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,8 @@ public class Patient : Person
         Role = RolesEnum.Patient;
     }
 
+    [ForeignKey("DoctorID")]
     public int DoctorID { get; set; }
-
-    HospitalService _service;
 
     public override void Menu(Database.HospitalService service)
     {

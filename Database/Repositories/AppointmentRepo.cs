@@ -20,11 +20,11 @@ public class AppointmentRepo : Repository<Appointment>
         get { return _context as HospitalContext; }
     }
 
-    public Appointment GetAppointmentById(Guid id)
-    {
-        //return hospitalContext.People.Include(p => p.Name).Include(p => p.Email).Include(p => p.Phone).Include(p => p.Address).SingleOrDefault(p => p.Id == id);
-        return new Appointment();
-    }
+    //public Appointment GetAppointmentById(Guid id)
+    //{
+    //    //return hospitalContext.People.Include(p => p.Name).Include(p => p.Email).Include(p => p.Phone).Include(p => p.Address).SingleOrDefault(p => p.Id == id);
+    //    return new Appointment(1,2,"hi");
+    //}
 
     public IEnumerable<Appointment> GetAppointmentByPerson(Person person)
     {

@@ -104,6 +104,16 @@ public class HospitalService
         return _personRepository.GetPersonById(id); // Retrieve a person by its id
     }
 
+    public IEnumerable<Person> GetPeople()
+    {
+        return _personRepository.GetAllPeople(); // Retrieve all persons
+    }
+
+    public IEnumerable<Appointment> GetAppointments()
+    {
+        return _appointmentRepository.GetAllAppointments(); // Retrieve all appointments
+    }
+
     public void Run()
     {
         SeedData();
