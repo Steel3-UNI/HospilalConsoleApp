@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace HospitalConsoleApp.Output;
 
@@ -12,8 +15,9 @@ public class PrintDoctor
     public static void PrintDoctorInfo(Doctor doctor, bool isSelf)
     {
         BaseConsoleCommands.Header(isSelf ? "My Details" : "My Doctor");
-        Console.WriteLine(isSelf ? "": "\nMy Doctor");
+        Console.WriteLine(isSelf ? "": "\nYour Doctor");
         Console.WriteLine();
-        Console.WriteLine();
+        doctor.PrintSelf();
+        Console.ReadKey();
     }
 }

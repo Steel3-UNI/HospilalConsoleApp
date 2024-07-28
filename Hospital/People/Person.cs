@@ -34,7 +34,7 @@ public abstract class Person
 
     public string Address { get; set; }
 
-    public abstract void Menu();
+    public abstract void Menu(Database.HospitalService service);
 
     public abstract void ViewDetails();
 

@@ -1,4 +1,5 @@
-﻿using HospitalConsoleApp.Output;
+﻿using HospitalConsoleApp.Hospital.Appointments;
+using HospitalConsoleApp.Output;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,11 @@ public class Doctor : Person
         Role = RolesEnum.Doctor;
     }
 
-    public override void Menu()
+    Database.HospitalService _service;
+
+    public override void Menu(Database.HospitalService service)
     {
+        _service = service;
         bool cont = true;
         while (cont)
         {
@@ -75,12 +79,12 @@ public class Doctor : Person
 
     public void ListPatients()
     {
-
+        _service.DisplayPeople();
     }
 
     public void ListAppointments()
     {
-
+        _service.DisplayAppointments();
     }
 
     public void ListAppointments(int id)
@@ -93,5 +97,16 @@ public class Doctor : Person
     {
         Console.WriteLine("Enter patient id:");
         id = Convert.ToInt32(Console.ReadLine());
+    }
+
+    public void PrintSelf()
+    {
+        Console.Write($"{Name}");
+        Console.SetCursorPosition(20, Console.CursorTop);
+        Console.Write($"| {Email}");
+        Console.SetCursorPosition(40, Console.CursorTop);
+        Console.Write($"| {Phone}");
+        Console.SetCursorPosition(52, Console.CursorTop);
+        Console.Write($"| {Address}");
     }
 }

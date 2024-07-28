@@ -9,7 +9,7 @@ namespace HospitalConsoleApp.Output;
 
 public class PrintPatient
 {
-    static void Print(Patient p)
+    public static void Print(Patient p)
     {
         BaseConsoleCommands.Header("My Details");
         Console.WriteLine();

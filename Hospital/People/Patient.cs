@@ -1,4 +1,5 @@
-﻿using HospitalConsoleApp.Output;
+﻿using HospitalConsoleApp.Database;
+using HospitalConsoleApp.Output;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,13 @@ public class Patient : Person
         Role = RolesEnum.Patient;
     }
 
-    public override void Menu()
+    public int DoctorID { get; set; }
+
+    HospitalService _service;
+
+    public override void Menu(Database.HospitalService service)
     {
+        _service = service;
         bool cont = true;
         while (cont)
         {
@@ -66,7 +72,7 @@ public class Patient : Person
 
     public override void ViewDetails()
     {
-        throw new NotImplementedException();
+        PrintPatient.Print(this);
     }
 
     public void BookAppointment()
@@ -83,6 +89,4 @@ public class Patient : Person
     {
 
     }
-
-    public int DoctorID { get; set; }
 }

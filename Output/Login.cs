@@ -67,6 +67,6 @@ public static class Login
         }
         Console.WriteLine("Valid Credentials");
         Console.ReadKey();
-        user.Menu();
+        user.Menu(service);
     }   
 }

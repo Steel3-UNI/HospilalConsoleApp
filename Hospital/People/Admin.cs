@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HospitalConsoleApp.Database;
+using HospitalConsoleApp.Output;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,8 +19,14 @@ public class Admin : Person
         Phone = "";
     }
 
-    public override void Menu()
+    HospitalService _service;
+
+    public override void Menu(Database.HospitalService service)
     {
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header("Administrator Menu");
+
+        _service = service;
         bool cont = true;
         while (cont)
         {
@@ -77,21 +85,77 @@ public class Admin : Person
 
     public void ListAllPatients()
     {
-        throw new NotImplementedException();
+        _service.DisplayPeople();
     }
 
     public void ListAllDoctors()
     {
-        throw new NotImplementedException();
+        _service.DisplayPeople();
     }
 
     public void ListByID(int id)
     {
-        throw new NotImplementedException();
+        _service.GetPersonById(id);
     }
 
     public void Add(RolesEnum role)
     {
-        throw new NotImplementedException();
+        BaseConsoleCommands.Clear();
+        Random rand = new Random();
+        string id = rand.Next(40000, 50000).ToString();
+        switch (role)
+        {
+            case RolesEnum.Doctor:
+                BaseConsoleCommands.Header("Add Doctor");
+
+                Console.WriteLine("Enter doctor name:");
+                string name = Console.ReadLine();
+                Console.WriteLine("Enter doctor email:");
+                string email = Console.ReadLine();
+                Console.WriteLine("Enter doctor phone:");
+                string phone = Console.ReadLine();
+                Console.WriteLine("Enter doctor address:");
+                string address = Console.ReadLine();
+
+                try 
+                {
+                    _service.AddPerson(id, name, role, email, phone, address);
+                    Console.WriteLine($"{name} added to the system!");
+                    Console.WriteLine($"The users system id is: {id}");
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("One or more of the inputted values is incorrect" + e.Message);
+                }
+                break;
+
+            case RolesEnum.Patient:
+                BaseConsoleCommands.Header("Add Patient");
+
+                Console.WriteLine("Enter patient name:");
+                name = Console.ReadLine();
+                Console.WriteLine("Enter patient email:");
+                email = Console.ReadLine();
+                Console.WriteLine("Enter patient phone:");
+                phone = Console.ReadLine();
+                Console.WriteLine("Enter patient address:");
+                address = Console.ReadLine();
+
+                try
+                {
+                    _service.AddPerson(id, name, role, email, phone, address);
+                    Console.WriteLine($"{name} added to the system!");
+                    Console.WriteLine($"The users system id is: {id}");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("One or more of the inputted values is incorrect" + e.Message);
+                }
+                break;
+
+            default:
+                break;
+        }
+        Console.ReadLine();
     }
 }

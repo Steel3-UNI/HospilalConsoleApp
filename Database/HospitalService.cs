@@ -89,7 +89,7 @@ public class HospitalService
         }
     }
 
-    public void DisplayPersons()
+    public void DisplayPeople()
     {
         IEnumerable<Person> persons = _personRepository.GetAllPeople();        // Retrieve all persons
         Console.WriteLine("Persons:");
