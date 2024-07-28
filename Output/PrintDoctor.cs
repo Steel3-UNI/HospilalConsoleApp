@@ -14,9 +14,9 @@ public class PrintDoctor
 {
     public static void PrintDoctorInfo(Doctor doctor, bool isSelf)
     {
+        BaseConsoleCommands.Clear();
         BaseConsoleCommands.Header(isSelf ? "My Details" : "My Doctor");
         Console.WriteLine(isSelf ? "": "\nYour Doctor");
-        Console.WriteLine();
         doctor.PrintSelf();
         Console.ReadKey();
     }
