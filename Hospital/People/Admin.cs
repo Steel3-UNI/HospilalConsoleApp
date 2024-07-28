@@ -24,13 +24,13 @@ public class Admin : Person
 
     public override void Menu(HospitalService service)
     {
-        BaseConsoleCommands.Clear();
-        BaseConsoleCommands.Header("Administrator Menu");
-
         _service = service;
         bool cont = true;
         while (cont)
         {
+            BaseConsoleCommands.Clear();
+            BaseConsoleCommands.Header("Administrator Menu");
+
             Console.WriteLine($"Welcome to DOTNET Hospital Management System {Name}");
             Console.WriteLine();
             Console.WriteLine("Please choose an option:");
