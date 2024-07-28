@@ -29,10 +29,14 @@ public class Patient : Person
 
     public override void Menu(Database.HospitalService service)
     {
+        
+
         _service = service;
         bool cont = true;
         while (cont)
         {
+            BaseConsoleCommands.Clear();
+            BaseConsoleCommands.Header("Patient Menu");
             Console.WriteLine($"Welcome to DOTNET Hospital Management System {Name}");
             Console.WriteLine();
             Console.WriteLine("Please choose an option:");

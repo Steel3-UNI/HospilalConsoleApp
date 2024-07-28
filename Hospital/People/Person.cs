@@ -41,7 +41,7 @@ public abstract class Person(int id, string name, string email, string phone, st
 
     public void Logout()
     {
-        BaseConsoleCommands.Logout();
+        Login.Logon(_service);
     }
 
     public void Exit()

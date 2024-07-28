@@ -25,6 +25,9 @@ public class Doctor : Person
 
     public override void Menu(Database.HospitalService service)
     {
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header("Doctor Menu");
+
         _service = service;
         bool cont = true;
         while (cont)

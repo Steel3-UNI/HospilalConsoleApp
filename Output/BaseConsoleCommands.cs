@@ -38,9 +38,4 @@ public static class BaseConsoleCommands
                         "|______________________________________________________|\n");
 
     }
-
-    public static void Logout()
-    {
-        throw new NotImplementedException();
-    }
 }

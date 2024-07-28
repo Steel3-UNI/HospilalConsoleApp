@@ -138,7 +138,7 @@ public class HospitalService
         int person9Id = AddPerson("20003", "MyParentsHopes AndDreams", RolesEnum.Doctor, "Test", "superman@gmail.com", "0475673083", "23 Real street Sydney");
         int person10Id = AddPerson("11111", "Admin Ostrator", RolesEnum.Admin, "Test");
 
-
+        _personRepository.SaveChanges();
 
         //// Display appointments and persons
         //DisplayAppointments();

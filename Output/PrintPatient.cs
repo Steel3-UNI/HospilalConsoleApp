@@ -11,6 +11,7 @@ public class PrintPatient
 {
     public static void Print(Patient p)
     {
+        BaseConsoleCommands.Clear();
         BaseConsoleCommands.Header("My Details");
         Console.WriteLine();
         Console.WriteLine($"{p.Name}'s Details");
