@@ -56,7 +56,7 @@ public static class Login
                 continue;
             }
 
-            if (pass != "password")
+            if (pass != user.Password)
             {
                 invalid = true;
                 continue;

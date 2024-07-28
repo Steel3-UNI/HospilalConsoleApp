@@ -33,22 +33,22 @@ public class HospitalService
     }
 
     // Method to add a new person to the library
-    public int AddPerson(string id, string name, RolesEnum role, string email = "", string phone = "", string address = "")
+    public int AddPerson(string id, string name, RolesEnum role, string pass, string email = "", string phone = "", string address = "")
     {
         Person person;
         switch (role)
         {
             case RolesEnum.Patient:
                 // Create a new Patient object with provided name
-                person = new Patient(int.Parse(id), name, email, phone, address);
+                person = new Patient(int.Parse(id), name, email, phone, address, pass);
                 break;
             case RolesEnum.Doctor:
                 // Create a new Doctor object with provided name
-                person = new Doctor(int.Parse(id), name, email, phone, address);
+                person = new Doctor(int.Parse(id), name, email, phone, address, pass);
                 break;
             default:
                 // Create a new Person object with provided name and role
-                person = new Admin(int.Parse(id), name);
+                person = new Admin(int.Parse(id), name, pass);
                 break;
         }
         // Add the person to the repository
@@ -127,16 +127,16 @@ public class HospitalService
         DeleteAllAppointments();
 
         // Add new people
-        int person1Id = AddPerson("10001", "Mark Ureta", RolesEnum.Patient);
-        int person2Id = AddPerson("10002", "Injur Ree", RolesEnum.Patient);
-        int person3Id = AddPerson("10003", "Tooth Hurty", RolesEnum.Patient);
-        int person4Id = AddPerson("10004", "Joe Rogan", RolesEnum.Patient);
-        int person5Id = AddPerson("10005", "Donald Trump", RolesEnum.Patient);
-        int person6Id = AddPerson("10006", "David Patientson", RolesEnum.Patient);
-        int person7Id = AddPerson("20001", "Jack Doctorson", RolesEnum.Doctor);
-        int person8Id = AddPerson("20002", "Louis Villella", RolesEnum.Doctor);
-        int person9Id = AddPerson("20003", "MyParentsHopes AndDreams", RolesEnum.Doctor);
-        int person10Id = AddPerson("11111", "Admin Ostrator", RolesEnum.Admin);
+        int person1Id = AddPerson("10001", "Mark Ureta", RolesEnum.Patient, "Hello", "playingHigh666@gmail.com", "0477193810", "4 Boston Avenue Wollindilly");
+        int person2Id = AddPerson("10002", "Injur Ree", RolesEnum.Patient, "Test", "superman@gmail.com", "0475673083", "23 Real street Sydney");
+        int person3Id = AddPerson("10003", "Tooth Hurty", RolesEnum.Patient, "Test", "superman@gmail.com", "0475673083", "Seeded data blvd Dotnet");
+        int person4Id = AddPerson("10004", "Joe Rogan", RolesEnum.Patient, "Test", "superman@gmail.com", "0475673083", "Seeded data blvd Dotnet");
+        int person5Id = AddPerson("10005", "Donald Trump", RolesEnum.Patient, "Test", "superman@gmail.com", "0475673083", "Used to be the white house");
+        int person6Id = AddPerson("10006", "David Patientson", RolesEnum.Patient, "Test", "superman@gmail.com", "0475673083", "23 Real street Sydney");
+        int person7Id = AddPerson("20001", "Jack Doctorson", RolesEnum.Doctor, "Test", "superman@gmail.com", "0475673083", "948 Dpctor Drive Sydney");
+        int person8Id = AddPerson("20002", "Louis Villella", RolesEnum.Doctor, "Test", "superman@gmail.com", "0475673083", "23 Real street Sydney");
+        int person9Id = AddPerson("20003", "MyParentsHopes AndDreams", RolesEnum.Doctor, "Test", "superman@gmail.com", "0475673083", "23 Real street Sydney");
+        int person10Id = AddPerson("11111", "Admin Ostrator", RolesEnum.Admin, "Test");
 
 
 

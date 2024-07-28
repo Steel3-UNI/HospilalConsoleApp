@@ -10,7 +10,7 @@ namespace HospitalConsoleApp.Hospital.People;
 
 public class Doctor : Person
 {
-    public Doctor(int id, string name, string email, string phone, string address) : base(id, name, email, phone, address, RolesEnum.Doctor)
+    public Doctor(int id, string name, string email, string phone, string address, string password) : base(id, name, email, phone, address, RolesEnum.Doctor, password)
     {
         Id = id;
         Name = name;
@@ -18,6 +18,7 @@ public class Doctor : Person
         Phone = phone;
         Address = address;
         Role = RolesEnum.Doctor;
+        Password = password;
     }
 
     Database.HospitalService _service;

@@ -12,7 +12,7 @@ namespace HospitalConsoleApp.Hospital.People;
 
 public class Patient : Person
 {
-    public Patient(int id, string name, string email, string phone, string address) : base(id, name, email, phone, address, RolesEnum.Patient)
+    public Patient(int id, string name, string email, string phone, string address, string password) : base(id, name, email, phone, address, RolesEnum.Patient, password)
     {
         Id = id;
         Name = name;
@@ -20,6 +20,8 @@ public class Patient : Person
         Phone = phone;
         Address = address;
         Role = RolesEnum.Patient;
+        DoctorID = 0;
+        Password = password;
     }
 
     [ForeignKey("DoctorID")]
@@ -78,7 +80,10 @@ public class Patient : Person
 
     public void BookAppointment()
     {
-
+        if (DoctorID == 0)
+        {
+            
+        }
     }
 
     public void ViewAppointments()

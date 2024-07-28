@@ -10,18 +10,19 @@ namespace HospitalConsoleApp.Hospital.People;
 
 public class Admin : Person
 {
-    public Admin(int id, string name) : base(id, name, string.Empty, string.Empty, string.Empty, RolesEnum.Admin)
+    public Admin(int id, string name, string password) : base(id, name, string.Empty, string.Empty, string.Empty, RolesEnum.Admin, password)
     {
         Id = id;
         Name = name;
         Role = RolesEnum.Admin;
         Email = "";
         Phone = "";
+        Password = password;
     }
 
     HospitalService _service;
 
-    public override void Menu(Database.HospitalService service)
+    public override void Menu(HospitalService service)
     {
         BaseConsoleCommands.Clear();
         BaseConsoleCommands.Header("Administrator Menu");

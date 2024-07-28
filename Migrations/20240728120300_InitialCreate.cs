@@ -20,6 +20,7 @@ namespace HospitalConsoleApp.Migrations
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Phone = table.Column<string>(type: "TEXT", nullable: false),
                     Address = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false),
                     Discriminator = table.Column<string>(type: "TEXT", nullable: false),
                     DoctorID = table.Column<int>(type: "INTEGER", nullable: true)
                 },
