@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace HospilalConsoleApp.Migrations
+namespace HospitalConsoleApp.Migrations
 {
     [DbContext(typeof(HospitalContext))]
-    [Migration("20240727044350_InitialCreate")]
+    [Migration("20240728085056_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
