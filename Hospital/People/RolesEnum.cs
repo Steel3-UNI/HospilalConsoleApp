@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospilalConsoleApp.Hospital.People
+namespace HospitalConsoleApp.Hospital.People;
+
+public enum RolesEnum
 {
-    public enum RolesEnum
-    {
-        Patient = 0,
+    Patient = 0,
 
-        Doctor = 1,
+    Doctor = 1,
 
-        Admin = 2,
-    }
+    Admin = 2,
 }

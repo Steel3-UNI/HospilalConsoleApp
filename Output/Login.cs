@@ -1,23 +1,32 @@
-﻿using HospilalConsoleApp.Database;
+﻿using HospitalConsoleApp.Database;
+using HospitalConsoleApp.Hospital.People;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospilalConsoleApp.Output
+namespace HospitalConsoleApp.Output;
+
+public static class Login
 {
-    public class Login
+    public static void Logon(HospitalService service)
     {
-        public void Logon()
+        var invalid = false;
+        Person user;
+
+        while (true)
         {
             BaseConsoleCommands.Clear();
             BaseConsoleCommands.Header("Login");
 
-            Console.WriteLine("Id: ");
-            string username = Console.ReadLine();
-            Console.WriteLine("Password: ");
+            if (invalid) { Console.WriteLine("Invalid Credentials, please try again"); }
 
+            Console.WriteLine("Id: ");
+            var Id = Console.ReadLine();
+            if (Id == null) { Id = string.Empty; }
+
+            Console.WriteLine("Password: ");
             var pass = string.Empty;
             ConsoleKey key;
             do
@@ -37,11 +46,27 @@ namespace HospilalConsoleApp.Output
                 }
             } while (key != ConsoleKey.Enter);
 
-            Console.WriteLine("Valid Credentials");
-            
-            var person = 
+            try
+            {
+                user = service.GetPersonById(int.Parse(Id));
+            }
+            catch (Exception)
+            {
+                invalid = true;
+                continue;
+            }
 
-            BaseConsoleCommands.Menu(person);
-        }   
-    }
+            if (pass != "password")
+            {
+                invalid = true;
+                continue;
+            } else
+            {
+                break;
+            }
+        }
+        Console.WriteLine("Valid Credentials");
+        Console.ReadKey();
+        user.Menu(service);
+    }   
 }

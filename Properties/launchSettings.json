@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "HospilalConsoleApp": {
+    "HospitalConsoleApp": {
       "commandName": "Project"
     },
     "WSL": {

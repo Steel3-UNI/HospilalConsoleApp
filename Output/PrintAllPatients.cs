@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospilalConsoleApp.Output
+namespace HospitalConsoleApp.Output;
+
+public class PrintAllPatients
 {
-    public class PrintAllPatients
-    {
-    }
 }
