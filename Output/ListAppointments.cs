@@ -51,5 +51,7 @@ public class ListAppointments
         {
             appointment.Print();
         }
+
+        Console.ReadLine();
     }
 }

@@ -19,7 +19,6 @@ public class Appointment
         Doctor = d;
         Description = desc;
         AppointmentId = Guid.NewGuid();
-        
     }
 
     public Guid AppointmentId { get; set; }
@@ -32,10 +31,10 @@ public class Appointment
 
     public void Print()
     {
-        Console.WriteLine($"{Doctor.Name,-20} | {Patient.Name,-20} | {Description}");
+        Console.WriteLine($"{Doctor.Name,-22} | {Patient.Name,-22} | {Description}");
     }
 
-    private void SendEmail()
+    public void SendEmail()
     {
         // Replace this with your gmail email address
         var fromEmail = "dotnethospital69@gmail.com";

@@ -1,4 +1,5 @@
 ﻿using HospitalConsoleApp.Database;
+using HospitalConsoleApp.Hospital.Appointments;
 using HospitalConsoleApp.Output;
 using System;
 using System.Collections.Generic;
@@ -95,7 +96,8 @@ public class Patient : Person
         Console.Write("Please enter the description of the appointment:");
         string description = Console.ReadLine();
         _service.AddAppointment(this, doctor, description);
-        //send email
+        Appointment appointment = new Appointment(this, doctor, description);
+        appointment.SendEmail();
     }
 
     public void ViewAppointments()
