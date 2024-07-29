@@ -12,7 +12,7 @@ namespace HospitalConsoleApp.Hospital.People;
 
 public class Patient : Person
 {
-    public Patient(int id, string name, string email, string phone, string address, string password) : base(id, name, email, phone, address, RolesEnum.Patient, password)
+    public Patient(int id, string name, string email, string phone, string address, string password, int doctorID = 0) : base(id, name, email, phone, address, RolesEnum.Patient, password)
     {
         Id = id;
         Name = name;
@@ -20,7 +20,7 @@ public class Patient : Person
         Phone = phone;
         Address = address;
         Role = RolesEnum.Patient;
-        DoctorID = 0;
+        DoctorID = doctorID;
         Password = password;
     }
 
@@ -29,8 +29,6 @@ public class Patient : Person
 
     public override void Menu(Database.HospitalService service)
     {
-        
-
         _service = service;
         bool cont = true;
         while (cont)
@@ -84,19 +82,57 @@ public class Patient : Person
 
     public void BookAppointment()
     {
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header("Book Appointment");
+
         if (DoctorID == 0)
         {
-            
+            AddDoctor();
         }
+
+        var doctor = _service.GetPersonById(DoctorID) as Doctor;
+        Console.WriteLine($"You are booking an appointment with {doctor.Name}");
+        Console.Write("Please enter the description of the appointment:");
+        string description = Console.ReadLine();
+        _service.AddAppointment(this, doctor, description);
+        //send email
     }
 
     public void ViewAppointments()
     {
-
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header("My Appointments");
+        ListAppointments.Appointments(this);
     }
 
     public void ViewDoctorDetails()
     {
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header("My Doctor");
 
+        if (DoctorID == 0)
+        {
+            AddDoctor();
+        }
+
+        var doctor = _service.GetPersonById(DoctorID) as Doctor;
+        PrintDoctor.PrintDoctorInfo(doctor, false);
+    }
+
+    private void AddDoctor()
+    {
+        Console.WriteLine("You are not registered with any doctor! Please choose which doctor you would like to register with.");
+        var doctors = _service.GetPeople().Where(p => p.Role == RolesEnum.Doctor);
+
+        int i = 1;
+        foreach (Doctor d in doctors)
+        {
+            Console.Write($"{i}: ");
+            d.PrintSelf();
+            i++;
+        }
+        Console.Write("Please select a doctor: ");
+        int id = int.Parse(Console.ReadKey().ToString());
+        DoctorID = doctors.ElementAt(id - 1).Id;
     }
 }

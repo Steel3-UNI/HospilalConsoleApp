@@ -51,13 +51,13 @@ public class Admin : Person
                     ListAllDoctors();
                     break;
                 case '2':
-                    ListByID(1);
+                    ListByID();
                     break;
                 case '3':
                     ListAllPatients();
                     break;
                 case '4':
-                    ListByID(1);
+                    ListByID();
                     break;
                 case '5':
                     Add(RolesEnum.Doctor);
@@ -86,17 +86,38 @@ public class Admin : Person
 
     public void ListAllPatients()
     {
-        _service.DisplayPeople();
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header("All Patients");
+        Console.WriteLine($"\nAll patients registered to the DOTNET Hospital Management System:\n");
+        Console.WriteLine("Patient             | Doctor              | Email Address               | Phone       | Address");
+        Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------");
+        IEnumerable<Patient> patients = (IEnumerable<Patient>)_service.GetPeople().Where(person => person.Role == RolesEnum.Patient);
+        foreach (var patient in patients)
+        {
+            var doctor = (Doctor)_service.GetPersonById(patient.DoctorID);
+            PrintPatient.Print(patient, doctor);
+        }
     }
 
     public void ListAllDoctors()
     {
-        _service.DisplayPeople();
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header("All Doctors");
+        Console.WriteLine();
+        Console.WriteLine("All doctors registered to the DOTNET Hospital Management System:");
+        Console.WriteLine("\nName                 | Email Address               | Phone       | Address");        
+        Console.WriteLine("------------------------------------------------------------------------------------------------------");
+
+        IEnumerable<Doctor> doctors = (IEnumerable<Doctor>)_service.GetPeople().Where(person => person.Role == RolesEnum.Doctor);
+        foreach (var doctor in doctors)
+        {
+            doctor.PrintSelf();
+        }
     }
 
-    public void ListByID(int id)
+    public void ListByID()
     {
-        _service.GetPersonById(id);
+        _service.GetPersonById(9);
     }
 
     public void Add(RolesEnum role)

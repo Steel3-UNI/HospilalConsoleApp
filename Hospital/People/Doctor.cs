@@ -54,13 +54,13 @@ public class Doctor : Person
                     ListPatients();
                     break;
                 case '3':
-                    ListAppointments();
+                    ListAppointments.Appointments(this);
                     break;
                 case '4':
-                    CheckPatient(1);
+                    CheckPatient();
                     break;
                 case '5':
-                    ListAppointments(1);
+                    ListAppointments.AppointmentsById(this);
                     break;
                 case '6':
                     cont = false;
@@ -83,24 +83,35 @@ public class Doctor : Person
 
     public void ListPatients()
     {
-        _service.DisplayPeople();
+        IEnumerable<Patient> pats = (IEnumerable<Patient>)_service.GetPeople().Where(p => p.Role == RolesEnum.Patient);
+        var docPats = pats.Where(p => p.DoctorID == Id);
+        Console.WriteLine($"Patients assigned to: {Name}\n");
+        Console.WriteLine("Patient             | Doctor              | Email Address               | Phone       | Address");
+        Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------");
+        foreach (Patient pat in docPats)
+        {
+            PrintPatient.Print(pat, this);
+        }
     }
 
-    public void ListAppointments()
+    public IEnumerable<Appointment> GetAppointments()
     {
-        _service.DisplayAppointments();
+        return _service.GetAppointments().Where(app => app.Doctor.Id == Id);
     }
 
-    public void ListAppointments(int id)
+    public void CheckPatient()
     {
-        Console.WriteLine("Enter patient id:");
-        id = Convert.ToInt32(Console.ReadLine());
-    }
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header("Check Patient Details");
 
-    public void CheckPatient(int id)
-    {
-        Console.WriteLine("Enter patient id:");
-        id = Convert.ToInt32(Console.ReadLine());
+        Console.Write("Enter patient id:");
+        int id = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine();
+        Console.WriteLine("Patient             | Doctor              | Email Address               | Phone       | Address");
+        Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------");
+
+        PrintPatient.Print((Patient)_service.GetPersonById(id), this);
     }
 
     public void PrintSelf()
@@ -108,9 +119,9 @@ public class Doctor : Person
         Console.Write($"{Name}");
         Console.SetCursorPosition(20, Console.CursorTop);
         Console.Write($"| {Email}");
-        Console.SetCursorPosition(40, Console.CursorTop);
+        Console.SetCursorPosition(50, Console.CursorTop);
         Console.Write($"| {Phone}");
-        Console.SetCursorPosition(52, Console.CursorTop);
+        Console.SetCursorPosition(65, Console.CursorTop);
         Console.Write($"| {Address}");
     }
 }
