@@ -1,7 +1,5 @@
 ﻿using HospitalConsoleApp.Database;
-using HospitalConsoleApp.Output;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 Main();
 
