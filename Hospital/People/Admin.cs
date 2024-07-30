@@ -187,7 +187,7 @@ public class Admin : Person
 
                 try 
                 {
-                    _service.AddPerson(id: id, name:Name, role: role, email: Email, phone: Phone, address: Address);
+                    _service.AddPerson(id: id, name: Name, role: role, email: Email, phone: Phone, address: Address);
                     Console.WriteLine($"{Name} added to the system!");
                     Console.WriteLine($"The users system id is: {id}");
                 }
@@ -211,7 +211,7 @@ public class Admin : Person
 
                 try
                 {
-                    _service.AddPerson(id: id, name: Name, role: role, Email, Phone, Address);
+                    _service.AddPerson(id: id, name: Name, role: role, email: Email, phone: Phone, address: Address); ;
                     Console.WriteLine($"{Name} added to the system!");
                     Console.WriteLine($"The users system id is: {id}");
                 }

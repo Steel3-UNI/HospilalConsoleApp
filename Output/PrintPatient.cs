@@ -25,9 +25,9 @@ public class PrintPatient
         Console.Write($"{p.Name}");
         Console.SetCursorPosition(20, Console.CursorTop);
         Console.Write($"| {doctorName}");
-        Console.SetCursorPosition(41, Console.CursorTop);
+        Console.SetCursorPosition(42, Console.CursorTop);
         Console.Write($"| {p.Email}");
-        Console.SetCursorPosition(71, Console.CursorTop);
+        Console.SetCursorPosition(72, Console.CursorTop);
         Console.Write($"| {p.Phone}");
         Console.SetCursorPosition(86, Console.CursorTop);
         Console.Write($"| {p.Address}");

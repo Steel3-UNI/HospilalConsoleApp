@@ -39,7 +39,7 @@ public class ListAppointments
     static void AppointmentsBase(IEnumerable<Appointment> appointments)
     {
         Console.WriteLine();
-        Console.WriteLine("Doctor                 | Patient                 |Description\n" +
+        Console.WriteLine("Doctor                 | Patient                  | Description\n" +
                           "-------------------------------------------------------------------------------------------------");
 
         foreach(var appointment in appointments)

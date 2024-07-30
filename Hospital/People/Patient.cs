@@ -169,6 +169,6 @@ public class Patient : Person
 
     public override string ToString()
     {
-        return "Patient             | Doctor              | Email Address               | Phone       | Address\n" +  "--------------------------------------------------------------------------------------------------------------------------\n";
+        return "Patient             | Doctor              | Email Address               | Phone       | Address\n" +  "--------------------------------------------------------------------------------------------------------------------------";
     }
 }

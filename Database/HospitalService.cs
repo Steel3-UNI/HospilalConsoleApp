@@ -160,8 +160,6 @@ public class HospitalService
         AddAppointment((Patient)GetPersonById(person2Id), (Doctor)GetPersonById(person7Id), "Checkup");
         AddAppointment((Patient)GetPersonById(person5Id), (Doctor)GetPersonById(person9Id), "Follow Up");
 
-        GetPersonById(11111);
-
         _personRepository.SaveChanges();
 
         // Display appointments and persons
