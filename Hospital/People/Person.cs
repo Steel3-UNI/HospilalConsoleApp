@@ -34,18 +34,16 @@ public abstract class Person(int id, string name, string email, string phone, st
 
     public abstract void ViewDetails();
 
-    public IEnumerable<Appointment> GetAppointments()
+    public void Logout(HospitalService service)
     {
-        return _service.GetAppointments().Where(a => a.Patient.Id == Id || a.Doctor.Id == Id);
+        Login.Logon(service);
     }
 
-    public void Logout()
+    public void Exit(HospitalService service)
     {
-        Login.Logon(_service);
-    }
-
-    public void Exit()
-    {
+        _service = service;
+        _service.DeleteAllPersons();
+        _service.DeleteAllAppointments();
         Environment.Exit(0);
     }
 }

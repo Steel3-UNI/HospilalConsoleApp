@@ -66,14 +66,14 @@ public class Patient : Person
                     cont = false;
                     break;
                 case '6':
-                    Exit();
+                    Exit(_service);
                     break;
                 default:
                     Console.WriteLine("Invalid input, please input a number between 1 and 6.");
                     break;
             }
         }
-        Logout();
+        Logout(_service);
     }
 
     public override void ViewDetails()
@@ -98,6 +98,13 @@ public class Patient : Person
         _service.AddAppointment(this, doctor, description);
         Appointment appointment = new Appointment(this, doctor, description);
         appointment.SendEmail();
+        Console.WriteLine("Appointment booked successfully!");
+        Console.ReadKey();
+    }
+
+    public IEnumerable<Appointment> GetAppointments()
+    {
+        return _service.GetAppointments().Where(a => a.Patient.Id == Id || a.Doctor.Id == Id);
     }
 
     public void ViewAppointments()
@@ -136,5 +143,10 @@ public class Patient : Person
         Console.Write("Please select a doctor: ");
         int id = int.Parse(Console.ReadKey().ToString());
         DoctorID = doctors.ElementAt(id - 1).Id;
+    }
+
+    public override string ToString()
+    {
+        return "Patient             | Doctor              | Email Address               | Phone       | Address\n" +  "--------------------------------------------------------------------------------------------------------------------------\n";
     }
 }

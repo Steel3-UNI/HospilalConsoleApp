@@ -66,14 +66,15 @@ public class Doctor : Person
                     cont = false;
                     break;
                 case '7':
-                    Exit();
+                    Exit(_service);
                     break;
                 default:
                     Console.WriteLine("Invalid input, please input a number between 1 and 7.");
+                    Console.ReadKey();
                     break;
             }
         }
-        Logout();
+        Logout(_service);
     }
 
     public override void ViewDetails()
@@ -83,15 +84,19 @@ public class Doctor : Person
 
     public void ListPatients()
     {
-        IEnumerable<Patient> pats = (IEnumerable<Patient>)_service.GetPeople().Where(p => p.Role == RolesEnum.Patient);
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header("My Patients");
+        Console.WriteLine();
+
+        IEnumerable<Patient> pats = _service.GetPeople().Where(p => p.Role == RolesEnum.Patient).OfType<Patient>();
         var docPats = pats.Where(p => p.DoctorID == Id);
         Console.WriteLine($"Patients assigned to: {Name}\n");
-        Console.WriteLine("Patient             | Doctor              | Email Address               | Phone       | Address");
-        Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------");
+        Console.WriteLine(docPats.FirstOrDefault().ToString());
         foreach (Patient pat in docPats)
         {
             PrintPatient.Print(pat, this);
         }
+        Console.ReadKey();
     }
 
     public IEnumerable<Appointment> GetAppointments()
@@ -108,10 +113,11 @@ public class Doctor : Person
         int id = Convert.ToInt32(Console.ReadLine());
 
         Console.WriteLine();
-        Console.WriteLine("Patient             | Doctor              | Email Address               | Phone       | Address");
-        Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------");
+        Patient pat = (Patient)_service.GetPersonById(id);
+        Console.WriteLine(pat.ToString());
 
-        PrintPatient.Print((Patient)_service.GetPersonById(id), this);
+        PrintPatient.Print(pat, this);
+        Console.ReadKey();
     }
 
     public void PrintSelf()
@@ -121,7 +127,8 @@ public class Doctor : Person
         Console.Write($"| {Email}");
         Console.SetCursorPosition(50, Console.CursorTop);
         Console.Write($"| {Phone}");
-        Console.SetCursorPosition(65, Console.CursorTop);
+        Console.SetCursorPosition(64, Console.CursorTop);
         Console.Write($"| {Address}");
+        Console.WriteLine();
     }
 }

@@ -33,7 +33,7 @@ public class HospitalService
     }
 
     // Method to add a new person to the library
-    public int AddPerson(string id, string name, RolesEnum role, string pass, string email = "", string phone = "", string address = "", int doctorID = 0)
+    public int AddPerson(string id, string name, RolesEnum role, string pass = "Test", string email = "", string phone = "", string address = "", int doctorID = 0)
     {
         Person person;
         switch (role)
@@ -138,11 +138,11 @@ public class HospitalService
         int person2Id = AddPerson("10002", "Injur Ree", RolesEnum.Patient, "Test", "superman@gmail.com", "0475673083", "23 Real street Sydney", 20001);
         int person3Id = AddPerson("10003", "Tooth Hurty", RolesEnum.Patient, "Test", "superman@gmail.com", "0475673083", "Seeded data blvd Dotnet", 20002);
         int person4Id = AddPerson("10004", "Joe Rogan", RolesEnum.Patient, "Test", "superman@gmail.com", "0475673083", "Seeded data blvd Dotnet", 20002);
-        int person5Id = AddPerson("10005", "Donald Trump", RolesEnum.Patient, "Test", "superman@gmail.com", "0475673083", "Used to be the white house", 20003);
-        int person6Id = AddPerson("10006", "David Patientson", RolesEnum.Patient, "Test", "superman@gmail.com", "0475673083", "23 Real street Sydney", 20003);
-        int person7Id = AddPerson("20001", "Jack Doctorson", RolesEnum.Doctor, "Test", "superman@gmail.com", "0475673083", "948 Dpctor Drive Sydney");
-        int person8Id = AddPerson("20002", "Louis Villella", RolesEnum.Doctor, "Test", "superman@gmail.com", "0475673083", "23 Real street Sydney");
-        int person9Id = AddPerson("20003", "MyParentsHopes AndDreams", RolesEnum.Doctor, "Test", "superman@gmail.com", "0475673083", "23 Real street Sydney");
+        int person5Id = AddPerson("10005", "Donald Trump", RolesEnum.Patient, "Test", "playingHigh666@gmail.com", "0475673083", "Used to be the white house", 20003);
+        int person6Id = AddPerson("10006", "David Patientson", RolesEnum.Patient, "Test", "dotnethospital69@gmail.com", "0475673083", "23 Real street Sydney", 20003);
+        int person7Id = AddPerson("20001", "Jack Doctorson", RolesEnum.Doctor, "Test", "dotnethospital69@gmail.com", "0475673083", "948 Dpctor Drive Sydney");
+        int person8Id = AddPerson("20002", "Louis Villella", RolesEnum.Doctor, "Test", "dotnethospital69@gmail.com", "0475673083", "23 Real street Sydney");
+        int person9Id = AddPerson("20003", "MyParentsDreams", RolesEnum.Doctor, "Test", "dotnethospital69@gmail.com", "0475673083", "23 Real street Sydney");
         int person10Id = AddPerson("11111", "Admin Ostrator", RolesEnum.Admin, "Test");
 
         _personRepository.SaveChanges();
@@ -159,6 +159,7 @@ public class HospitalService
         AddAppointment((Patient)GetPersonById(person2Id), (Doctor)GetPersonById(person7Id), "Checkup");
         AddAppointment((Patient)GetPersonById(person5Id), (Doctor)GetPersonById(person9Id), "Follow Up");
 
+        GetPersonById(11111);
 
         _personRepository.SaveChanges();
 

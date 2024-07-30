@@ -39,5 +39,6 @@ public class PrintPatient
         Console.Write($"| {p.Phone}");
         Console.SetCursorPosition(86, Console.CursorTop);
         Console.Write($"| {p.Address}");
+        Console.WriteLine();
     }
 }
