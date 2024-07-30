@@ -1,6 +1,7 @@
 ﻿using HospitalConsoleApp.Hospital.Appointments;
 using HospitalConsoleApp.Hospital.People;
 using HospitalConsoleApp.Output;
+using System.Linq.Expressions;
 
 namespace HospitalConsoleApp.Database;
 
@@ -109,6 +110,11 @@ public class HospitalService
     public IEnumerable<Person> GetPeople()
     {
         return _personRepository.GetAllPeople(); // Retrieve all persons
+    }
+
+    public IEnumerable<Person> GetPeopleOnCondition(Expression<Func<Person, bool>> predicate)
+    {
+        return _personRepository.GetPeopleOnCondition(predicate); // Retrieve all persons by role
     }
 
     public IEnumerable<Appointment> GetAppointments()

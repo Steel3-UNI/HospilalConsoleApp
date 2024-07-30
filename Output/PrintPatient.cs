@@ -20,11 +20,11 @@ public class PrintPatient
         Console.ReadKey();
     }
 
-    public static void Print(Patient p, Doctor d)
+    public static void Print(Patient p, string doctorName)
     {
         Console.Write($"{p.Name}");
         Console.SetCursorPosition(20, Console.CursorTop);
-        Console.Write($"| {d.Name}");
+        Console.Write($"| {doctorName}");
         Console.SetCursorPosition(41, Console.CursorTop);
         Console.Write($"| {p.Email}");
         Console.SetCursorPosition(71, Console.CursorTop);

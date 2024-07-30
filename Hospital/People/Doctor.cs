@@ -16,8 +16,6 @@ public class Doctor : Person
         Password = password;
     }
 
-    Database.HospitalService _service;
-
     public override void Menu(Database.HospitalService service)
     {
         _service = service;
@@ -61,7 +59,7 @@ public class Doctor : Person
                     cont = false;
                     break;
                 case '7':
-                    Exit(_service);
+                    Exit();
                     break;
                 default:
                     Console.WriteLine("Invalid input, please input a number between 1 and 7.");
@@ -69,7 +67,7 @@ public class Doctor : Person
                     break;
             }
         }
-        Logout(_service);
+        Logout();
     }
 
     public override void ViewDetails()
@@ -89,7 +87,7 @@ public class Doctor : Person
         Console.WriteLine(docPats.FirstOrDefault().ToString());
         foreach (Patient pat in docPats)
         {
-            PrintPatient.Print(pat, this);
+            PrintPatient.Print(pat, Name);
         }
         Console.ReadKey();
     }
@@ -105,13 +103,23 @@ public class Doctor : Person
         BaseConsoleCommands.Header("Check Patient Details");
 
         Console.Write("Enter patient id:");
-        int id = Convert.ToInt32(Console.ReadLine());
+        int id;
+        try
+        {
+            id = Convert.ToInt32(Console.ReadLine());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Invalid input, please try again.");
+            Console.ReadKey();
+            return;
+        }
 
         Console.WriteLine();
         Patient pat = (Patient)_service.GetPersonById(id);
         Console.WriteLine(pat.ToString());
 
-        PrintPatient.Print(pat, this);
+        PrintPatient.Print(pat, Name);
         Console.ReadKey();
     }
 
@@ -125,5 +133,10 @@ public class Doctor : Person
         Console.SetCursorPosition(64, Console.CursorTop);
         Console.Write($"| {Address}");
         Console.WriteLine();
+    }
+
+    public override string ToString()
+    {
+        return "Name                | Email Address               | Phone       | Address\n" + "------------------------------------------------------------------------------------------------------";
     }
 }

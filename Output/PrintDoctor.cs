@@ -10,8 +10,7 @@ public class PrintDoctor
         BaseConsoleCommands.Header(isSelf ? "My Details" : "My Doctor");
         Console.WriteLine(isSelf ? "": "\nYour Doctor:\n");
 
-        Console.WriteLine("Name                | Email Address               | Phone       | Address");
-        Console.WriteLine("------------------------------------------------------------------------------------------------------");
+        Console.WriteLine(doctor.ToString());
         doctor.PrintSelf();
         Console.ReadKey();
     }

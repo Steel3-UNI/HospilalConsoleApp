@@ -15,8 +15,6 @@ public class Admin : Person
         Password = password;
     }
 
-    HospitalService _service;
-
     public override void Menu(HospitalService service)
     {
         _service = service;
@@ -64,14 +62,14 @@ public class Admin : Person
                     cont = false;
                     break;
                 case '8':
-                    Exit(_service);
+                    Exit();
                     break;
                 default:
                     Console.WriteLine("Invalid input, please input a number between 1 and 8.");
                     break;
             }
         }
-        Logout(_service);
+        Logout();
     }
 
     public override void ViewDetails()
@@ -83,13 +81,22 @@ public class Admin : Person
     {
         BaseConsoleCommands.Clear();
         BaseConsoleCommands.Header("All Patients");
-        Console.WriteLine($"\nAll patients registered to the DOTNET Hospital Management System:\n");
-        Console.WriteLine("Patient             | Doctor              | Email Address               | Phone       | Address");
-        Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------");
-        IEnumerable<Patient> patients = _service.GetPeople().Where(p => p.Role == RolesEnum.Patient).OfType<Patient>();
+        Console.WriteLine($"\nAll patients registered to the DOTNET Hospital Management System:");
+        Console.WriteLine();
+        IEnumerable<Patient> patients = _service.GetPeopleOnCondition(person => person.Role == RolesEnum.Patient).OfType<Patient>();
+        Console.WriteLine(patients.FirstOrDefault().ToString());
         foreach (var patient in patients)
         {
-            var doctor = (Doctor)_service.GetPersonById(patient.DoctorID);
+            string doctor;
+            try
+            {
+                doctor = _service.GetPersonById(patient.DoctorID).Name;
+            }
+            catch (Exception e)
+            {
+                doctor = "N/A";
+            }
+
             PrintPatient.Print(patient, doctor);
         }
 
@@ -102,10 +109,17 @@ public class Admin : Person
         BaseConsoleCommands.Header("All Doctors");
         Console.WriteLine();
         Console.WriteLine("All doctors registered to the DOTNET Hospital Management System:");
-        Console.WriteLine("\nName                 | Email Address               | Phone       | Address");        
-        Console.WriteLine("------------------------------------------------------------------------------------------------------");
+        Console.WriteLine();
 
-        IEnumerable<Doctor> doctors = _service.GetPeople().Where(p => p.Role == RolesEnum.Doctor).OfType<Doctor>();
+        IEnumerable<Doctor> doctors = _service.GetPeopleOnCondition(person => person.Role == RolesEnum.Doctor).OfType<Doctor>();
+        if(doctors.Count() == 0)
+        {
+            Console.WriteLine("No doctors found in the system.");
+            Console.ReadKey();
+            return;
+        }
+
+        Console.WriteLine(doctors.FirstOrDefault().ToString());
         foreach (var doctor in doctors)
         {
             doctor.PrintSelf();
@@ -122,32 +136,33 @@ public class Admin : Person
         Console.Write("\nPlease ente rthe ID of the ");
         Console.Write(role == RolesEnum.Patient ? "patient" : "doctor");
         Console.WriteLine(" whose details you are checking. Or press n to return to menu");
-        var id = Console.ReadLine();
-        if (id == "n")
+        try
         {
-            return;
+            var id = Console.ReadLine();
+            if (id == "n")
+            {
+                return;
+            }
+
+            var iid = int.Parse(id);
+
+            if (role == RolesEnum.Doctor)
+            {
+                var doctor = _service.GetPersonById(iid) as Doctor;
+                PrintDoctor.PrintDoctorInfo(doctor, true);
+                return;
+            }
+            else
+            {
+                var patient = _service.GetPersonById(iid) as Patient;
+                Console.WriteLine(patient.ToString());
+                PrintPatient.Print(patient, _service.GetPersonById(patient.DoctorID).Name);
+            }
         }
-
-        var iid = int.Parse(id);
-
-        if (role == RolesEnum.Doctor)
+        catch (Exception e)
         {
-            var doctor = _service.GetPersonById(iid) as Doctor;
-            PrintDoctor.PrintDoctorInfo(doctor, true);
-            return;
+            Console.WriteLine("Invalid input, please enter a valid ID.");
         }
-        else
-        {
-            Console.WriteLine("Patient             | Doctor              | Email Address               | Phone       | Address");
-            Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------");
-            var patient = _service.GetPersonById(iid) as Patient;
-            PrintPatient.Print(patient, (Doctor)_service.GetPersonById(patient.DoctorID));
-        }
-
-        _service.GetPersonById(iid);
-
-
-
         Console.ReadKey();
     }
 
@@ -202,7 +217,7 @@ public class Admin : Person
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("One or more of the inputted values is incorrect" + e.Message);
+                    Console.WriteLine("One or more of the inputted values is incorrectly formatted.");
                 }
                 break;
 

@@ -59,14 +59,15 @@ public class Patient : Person
                     cont = false;
                     break;
                 case '6':
-                    Exit(_service);
+                    Exit();
                     break;
                 default:
                     Console.WriteLine("Invalid input, please input a number between 1 and 6.");
+                    Console.ReadKey();
                     break;
             }
         }
-        Logout(_service);
+        Logout();
     }
 
     public override void ViewDetails()
@@ -87,10 +88,28 @@ public class Patient : Person
         var doctor = _service.GetPersonById(DoctorID) as Doctor;
         Console.WriteLine($"You are booking an appointment with {doctor.Name}");
         Console.Write("Please enter the description of the appointment:");
-        string description = Console.ReadLine();
+        string description;
+        try 
+        { 
+            description = Console.ReadLine();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Invalid input, please try again.");
+            Console.ReadKey();
+            return;
+        }
+
         _service.AddAppointment(this, doctor, description);
-        Appointment appointment = new Appointment(this, doctor, description);
-        appointment.SendEmail();
+        try
+        {
+            Appointment appointment = new Appointment(this, doctor, description);
+            appointment.SendEmail();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Failed to send email");
+        }
         Console.WriteLine("Appointment booked successfully!");
         Console.ReadKey();
     }
@@ -134,7 +153,17 @@ public class Patient : Person
             i++;
         }
         Console.Write("Please select a doctor: ");
-        int id = int.Parse(Console.ReadKey().ToString());
+        int id;
+        try
+        {
+            id = int.Parse(Console.ReadKey().KeyChar.ToString());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Invalid input, please try again.");
+            Console.ReadKey();
+            return;
+        }
         DoctorID = doctors.ElementAt(id - 1).Id;
     }
 

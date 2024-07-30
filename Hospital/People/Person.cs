@@ -23,18 +23,17 @@ public abstract class Person(int id, string name, string email, string phone, st
 
     public HospitalService _service;
 
-    public abstract void Menu(Database.HospitalService service);
+    public abstract void Menu(HospitalService service);
 
     public abstract void ViewDetails();
 
-    public void Logout(HospitalService service)
+    public void Logout()
     {
-        Login.Logon(service);
+        Login.Logon(_service);
     }
 
-    public void Exit(HospitalService service)
+    public void Exit()
     {
-        _service = service;
         _service.DeleteAllPersons();
         _service.DeleteAllAppointments();
         Environment.Exit(0);
