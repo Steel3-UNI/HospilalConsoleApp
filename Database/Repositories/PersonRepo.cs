@@ -23,11 +23,6 @@ public class PersonRepo : Repository<Person>
         return hospitalContext.People.SingleOrDefault(p => p.Id == id);
     }
 
-    public IEnumerable<Person> GetAllPeople(RolesEnum role)
-    {
-        return hospitalContext.People.Where(p => p.Role == role).ToList();
-    }
-
     public IEnumerable<Person> GetAllPeople()
     {
         return hospitalContext.People.ToList();

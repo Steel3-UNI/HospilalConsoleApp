@@ -10,7 +10,7 @@ namespace HospitalConsoleApp.Hospital.People;
 
 public class Doctor : Person
 {
-    public Doctor(int id, string name, string email, string phone, string address) : base(id, name, email, phone, address, RolesEnum.Doctor)
+    public Doctor(int id, string name, string email, string phone, string address, string password) : base(id, name, email, phone, address, RolesEnum.Doctor, password)
     {
         Id = id;
         Name = name;
@@ -18,6 +18,7 @@ public class Doctor : Person
         Phone = phone;
         Address = address;
         Role = RolesEnum.Doctor;
+        Password = password;
     }
 
     Database.HospitalService _service;
@@ -28,6 +29,9 @@ public class Doctor : Person
         bool cont = true;
         while (cont)
         {
+            BaseConsoleCommands.Clear();
+            BaseConsoleCommands.Header("Doctor Menu");
+
             Console.WriteLine($"Welcome to DOTNET Hospital Management System {Name}");
             Console.WriteLine();
             Console.WriteLine("Please choose an option:");
@@ -50,26 +54,27 @@ public class Doctor : Person
                     ListPatients();
                     break;
                 case '3':
-                    ListAppointments();
+                    ListAppointments.Appointments(this);
                     break;
                 case '4':
-                    CheckPatient(1);
+                    CheckPatient();
                     break;
                 case '5':
-                    ListAppointments(1);
+                    ListAppointments.AppointmentsById(this);
                     break;
                 case '6':
                     cont = false;
                     break;
                 case '7':
-                    Exit();
+                    Exit(_service);
                     break;
                 default:
                     Console.WriteLine("Invalid input, please input a number between 1 and 7.");
+                    Console.ReadKey();
                     break;
             }
         }
-        Logout();
+        Logout(_service);
     }
 
     public override void ViewDetails()
@@ -79,24 +84,40 @@ public class Doctor : Person
 
     public void ListPatients()
     {
-        _service.DisplayPeople();
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header("My Patients");
+        Console.WriteLine();
+
+        IEnumerable<Patient> pats = _service.GetPeople().Where(p => p.Role == RolesEnum.Patient).OfType<Patient>();
+        var docPats = pats.Where(p => p.DoctorID == Id);
+        Console.WriteLine($"Patients assigned to: {Name}\n");
+        Console.WriteLine(docPats.FirstOrDefault().ToString());
+        foreach (Patient pat in docPats)
+        {
+            PrintPatient.Print(pat, this);
+        }
+        Console.ReadKey();
     }
 
-    public void ListAppointments()
+    public IEnumerable<Appointment> GetAppointments()
     {
-        _service.DisplayAppointments();
+        return _service.GetAppointments().Where(app => app.Doctor.Id == Id);
     }
 
-    public void ListAppointments(int id)
+    public void CheckPatient()
     {
-        Console.WriteLine("Enter patient id:");
-        id = Convert.ToInt32(Console.ReadLine());
-    }
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header("Check Patient Details");
 
-    public void CheckPatient(int id)
-    {
-        Console.WriteLine("Enter patient id:");
-        id = Convert.ToInt32(Console.ReadLine());
+        Console.Write("Enter patient id:");
+        int id = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine();
+        Patient pat = (Patient)_service.GetPersonById(id);
+        Console.WriteLine(pat.ToString());
+
+        PrintPatient.Print(pat, this);
+        Console.ReadKey();
     }
 
     public void PrintSelf()
@@ -104,9 +125,10 @@ public class Doctor : Person
         Console.Write($"{Name}");
         Console.SetCursorPosition(20, Console.CursorTop);
         Console.Write($"| {Email}");
-        Console.SetCursorPosition(40, Console.CursorTop);
+        Console.SetCursorPosition(50, Console.CursorTop);
         Console.Write($"| {Phone}");
-        Console.SetCursorPosition(52, Console.CursorTop);
+        Console.SetCursorPosition(64, Console.CursorTop);
         Console.Write($"| {Address}");
+        Console.WriteLine();
     }
 }

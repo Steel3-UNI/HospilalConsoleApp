@@ -11,30 +11,22 @@ using System.Threading.Tasks;
 
 namespace HospitalConsoleApp.Hospital.People;
 
-public abstract class Person
+public abstract class Person(int id, string name, string email, string phone, string address, RolesEnum role, string password)
 {
-    public Person(int id, string name, string email, string phone, string address, RolesEnum role)
-    {
-        Id = id;
-        Name = name;
-        Role = role;
-        Email = email;
-        Phone = phone;
-        Address = address;
-    }
-
     [Key]
-    public int Id { get; set; }
+    public int Id { get; set; } = id;
 
-    public string Name { get; set; }
+    public string Name { get; set; } = name;
 
-    public RolesEnum Role { get; set; }
+    public RolesEnum Role { get; set; } = role;
 
-    public string Email { get; set; }
+    public string Email { get; set; } = email;
 
-    public string Phone { get; set; }
+    public string Phone { get; set; } = phone;
 
-    public string Address { get; set; }
+    public string Address { get; set; } = address;
+
+    public string Password { get; set; } = password;
 
     public HospitalService _service;
 
@@ -42,18 +34,16 @@ public abstract class Person
 
     public abstract void ViewDetails();
 
-    public IEnumerable<Appointment> GetAppointments()
+    public void Logout(HospitalService service)
     {
-        return _service.GetAppointments().Where(a => a.Patient.Id == Id || a.Doctor.Id == Id);
+        Login.Logon(service);
     }
 
-    public void Logout()
+    public void Exit(HospitalService service)
     {
-        BaseConsoleCommands.Logout();
-    }
-
-    public void Exit()
-    {
+        _service = service;
+        _service.DeleteAllPersons();
+        _service.DeleteAllAppointments();
         Environment.Exit(0);
     }
 }

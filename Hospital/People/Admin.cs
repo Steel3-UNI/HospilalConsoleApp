@@ -10,26 +10,27 @@ namespace HospitalConsoleApp.Hospital.People;
 
 public class Admin : Person
 {
-    public Admin(int id, string name) : base(id, name, string.Empty, string.Empty, string.Empty, RolesEnum.Admin)
+    public Admin(int id, string name, string password) : base(id, name, string.Empty, string.Empty, string.Empty, RolesEnum.Admin, password)
     {
         Id = id;
         Name = name;
         Role = RolesEnum.Admin;
         Email = "";
         Phone = "";
+        Password = password;
     }
 
     HospitalService _service;
 
-    public override void Menu(Database.HospitalService service)
+    public override void Menu(HospitalService service)
     {
-        BaseConsoleCommands.Clear();
-        BaseConsoleCommands.Header("Administrator Menu");
-
         _service = service;
         bool cont = true;
         while (cont)
         {
+            BaseConsoleCommands.Clear();
+            BaseConsoleCommands.Header("Administrator Menu");
+
             Console.WriteLine($"Welcome to DOTNET Hospital Management System {Name}");
             Console.WriteLine();
             Console.WriteLine("Please choose an option:");
@@ -50,13 +51,13 @@ public class Admin : Person
                     ListAllDoctors();
                     break;
                 case '2':
-                    ListByID(1);
+                    ListByID(RolesEnum.Doctor);
                     break;
                 case '3':
                     ListAllPatients();
                     break;
                 case '4':
-                    ListByID(1);
+                    ListByID(RolesEnum.Patient);
                     break;
                 case '5':
                     Add(RolesEnum.Doctor);
@@ -68,14 +69,14 @@ public class Admin : Person
                     cont = false;
                     break;
                 case '8':
-                    Exit();
+                    Exit(_service);
                     break;
                 default:
                     Console.WriteLine("Invalid input, please input a number between 1 and 8.");
                     break;
             }
         }
-        Logout();
+        Logout(_service);
     }
 
     public override void ViewDetails()
@@ -85,17 +86,74 @@ public class Admin : Person
 
     public void ListAllPatients()
     {
-        _service.DisplayPeople();
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header("All Patients");
+        Console.WriteLine($"\nAll patients registered to the DOTNET Hospital Management System:\n");
+        Console.WriteLine("Patient             | Doctor              | Email Address               | Phone       | Address");
+        Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------");
+        IEnumerable<Patient> patients = _service.GetPeople().Where(p => p.Role == RolesEnum.Patient).OfType<Patient>();
+        foreach (var patient in patients)
+        {
+            var doctor = (Doctor)_service.GetPersonById(patient.DoctorID);
+            PrintPatient.Print(patient, doctor);
+        }
+
+        Console.ReadKey();
     }
 
     public void ListAllDoctors()
     {
-        _service.DisplayPeople();
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header("All Doctors");
+        Console.WriteLine();
+        Console.WriteLine("All doctors registered to the DOTNET Hospital Management System:");
+        Console.WriteLine("\nName                 | Email Address               | Phone       | Address");        
+        Console.WriteLine("------------------------------------------------------------------------------------------------------");
+
+        IEnumerable<Doctor> doctors = _service.GetPeople().Where(p => p.Role == RolesEnum.Doctor).OfType<Doctor>();
+        foreach (var doctor in doctors)
+        {
+            doctor.PrintSelf();
+        }
+
+        Console.ReadKey();
     }
 
-    public void ListByID(int id)
+    public void ListByID(RolesEnum role)
     {
-        _service.GetPersonById(id);
+        BaseConsoleCommands.Clear();
+        BaseConsoleCommands.Header(role == RolesEnum.Patient ? "Patient Details" : "Doctor Details");
+        
+        Console.Write("\nPlease ente rthe ID of the ");
+        Console.Write(role == RolesEnum.Patient ? "patient" : "doctor");
+        Console.WriteLine(" whose details you are checking. Or press n to return to menu");
+        var id = Console.ReadLine();
+        if (id == "n")
+        {
+            return;
+        }
+
+        var iid = int.Parse(id);
+
+        if (role == RolesEnum.Doctor)
+        {
+            var doctor = _service.GetPersonById(iid) as Doctor;
+            PrintDoctor.PrintDoctorInfo(doctor, true);
+            return;
+        }
+        else
+        {
+            Console.WriteLine("Patient             | Doctor              | Email Address               | Phone       | Address");
+            Console.WriteLine("--------------------------------------------------------------------------------------------------------------------------");
+            var patient = _service.GetPersonById(iid) as Patient;
+            PrintPatient.Print(patient, (Doctor)_service.GetPersonById(patient.DoctorID));
+        }
+
+        _service.GetPersonById(iid);
+
+
+
+        Console.ReadKey();
     }
 
     public void Add(RolesEnum role)
@@ -109,18 +167,18 @@ public class Admin : Person
                 BaseConsoleCommands.Header("Add Doctor");
 
                 Console.WriteLine("Enter doctor name:");
-                string name = Console.ReadLine();
+                string Name = Console.ReadLine();
                 Console.WriteLine("Enter doctor email:");
-                string email = Console.ReadLine();
+                string Email = Console.ReadLine();
                 Console.WriteLine("Enter doctor phone:");
-                string phone = Console.ReadLine();
+                string Phone = Console.ReadLine();
                 Console.WriteLine("Enter doctor address:");
-                string address = Console.ReadLine();
+                string Address = Console.ReadLine();
 
                 try 
                 {
-                    _service.AddPerson(id, name, role, email, phone, address);
-                    Console.WriteLine($"{name} added to the system!");
+                    _service.AddPerson(id: id, name:Name, role: role, email: Email, phone: Phone, address: Address);
+                    Console.WriteLine($"{Name} added to the system!");
                     Console.WriteLine($"The users system id is: {id}");
                 }
                 catch(Exception e)
@@ -133,18 +191,18 @@ public class Admin : Person
                 BaseConsoleCommands.Header("Add Patient");
 
                 Console.WriteLine("Enter patient name:");
-                name = Console.ReadLine();
+                Name = Console.ReadLine();
                 Console.WriteLine("Enter patient email:");
-                email = Console.ReadLine();
+                Email = Console.ReadLine();
                 Console.WriteLine("Enter patient phone:");
-                phone = Console.ReadLine();
+                Phone = Console.ReadLine();
                 Console.WriteLine("Enter patient address:");
-                address = Console.ReadLine();
+                Address = Console.ReadLine();
 
                 try
                 {
-                    _service.AddPerson(id, name, role, email, phone, address);
-                    Console.WriteLine($"{name} added to the system!");
+                    _service.AddPerson(id: id, name: Name, role: role, Email, Phone, Address);
+                    Console.WriteLine($"{Name} added to the system!");
                     Console.WriteLine($"The users system id is: {id}");
                 }
                 catch (Exception e)

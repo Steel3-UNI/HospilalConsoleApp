@@ -22,10 +22,10 @@ public class HospitalService
     }
 
     // Method to add a new appointment to the library
-    public void AddAppointment(Patient p, string desc)
+    public void AddAppointment(Patient p, Doctor d, string desc)
     {
         // Create a new Appointment object with provided name
-        var appointment = new Appointment(p, (Doctor)_personRepository.GetPersonById(p.DoctorID), desc);
+        var appointment = new Appointment(p, d, desc);
         // Add the appointment to the repository
         _appointmentRepository.Add(appointment);
         // Save changes to the database
@@ -33,22 +33,29 @@ public class HospitalService
     }
 
     // Method to add a new person to the library
-    public int AddPerson(string id, string name, RolesEnum role, string email = "", string phone = "", string address = "")
+    public int AddPerson(string id, string name, RolesEnum role, string pass = "Test", string email = "", string phone = "", string address = "", int doctorID = 0)
     {
         Person person;
         switch (role)
         {
             case RolesEnum.Patient:
                 // Create a new Patient object with provided name
-                person = new Patient(int.Parse(id), name, email, phone, address);
+                if(doctorID != 0)
+                {
+                    person = new Patient(int.Parse(id), name, email, phone, address, pass, doctorID);
+                }
+                else
+                {
+                    person = new Patient(int.Parse(id), name, email, phone, address, pass);
+                }
                 break;
             case RolesEnum.Doctor:
                 // Create a new Doctor object with provided name
-                person = new Doctor(int.Parse(id), name, email, phone, address);
+                person = new Doctor(int.Parse(id), name, email, phone, address, pass);
                 break;
             default:
                 // Create a new Person object with provided name and role
-                person = new Admin(int.Parse(id), name);
+                person = new Admin(int.Parse(id), name, pass);
                 break;
         }
         // Add the person to the repository
@@ -127,21 +134,37 @@ public class HospitalService
         DeleteAllAppointments();
 
         // Add new people
-        int person1Id = AddPerson("10001", "Mark Ureta", RolesEnum.Patient);
-        int person2Id = AddPerson("10002", "Injur Ree", RolesEnum.Patient);
-        int person3Id = AddPerson("10003", "Tooth Hurty", RolesEnum.Patient);
-        int person4Id = AddPerson("10004", "Joe Rogan", RolesEnum.Patient);
-        int person5Id = AddPerson("10005", "Donald Trump", RolesEnum.Patient);
-        int person6Id = AddPerson("10006", "David Patientson", RolesEnum.Patient);
-        int person7Id = AddPerson("20001", "Jack Doctorson", RolesEnum.Doctor);
-        int person8Id = AddPerson("20002", "Louis Villella", RolesEnum.Doctor);
-        int person9Id = AddPerson("20003", "MyParentsHopes AndDreams", RolesEnum.Doctor);
-        int person10Id = AddPerson("11111", "Admin Ostrator", RolesEnum.Admin);
+        int person1Id = AddPerson("10001", "Mark Ureta", RolesEnum.Patient, "Hello", "playingHigh666@gmail.com", "0477193810", "4 Boston Avenue Wollindilly", 20001);
+        int person2Id = AddPerson("10002", "Injur Ree", RolesEnum.Patient, "Test", "superman@gmail.com", "0475673083", "23 Real street Sydney", 20001);
+        int person3Id = AddPerson("10003", "Tooth Hurty", RolesEnum.Patient, "Test", "superman@gmail.com", "0475673083", "Seeded data blvd Dotnet", 20002);
+        int person4Id = AddPerson("10004", "Joe Rogan", RolesEnum.Patient, "Test", "superman@gmail.com", "0475673083", "Seeded data blvd Dotnet", 20002);
+        int person5Id = AddPerson("10005", "Donald Trump", RolesEnum.Patient, "Test", "playingHigh666@gmail.com", "0475673083", "Used to be the white house", 20003);
+        int person6Id = AddPerson("10006", "David Patientson", RolesEnum.Patient, "Test", "dotnethospital69@gmail.com", "0475673083", "23 Real street Sydney", 20003);
+        int person7Id = AddPerson("20001", "Jack Doctorson", RolesEnum.Doctor, "Test", "dotnethospital69@gmail.com", "0475673083", "948 Dpctor Drive Sydney");
+        int person8Id = AddPerson("20002", "Louis Villella", RolesEnum.Doctor, "Test", "dotnethospital69@gmail.com", "0475673083", "23 Real street Sydney");
+        int person9Id = AddPerson("20003", "MyParentsDreams", RolesEnum.Doctor, "Test", "dotnethospital69@gmail.com", "0475673083", "23 Real street Sydney");
+        int person10Id = AddPerson("11111", "Admin Ostrator", RolesEnum.Admin, "Test");
 
+        _personRepository.SaveChanges();
 
+        // Add new appointments
+        AddAppointment((Patient)GetPersonById(person1Id), (Doctor)GetPersonById(person7Id), "Checkup");
+        AddAppointment((Patient)GetPersonById(person2Id), (Doctor)GetPersonById(person7Id), "Surgery");
+        AddAppointment((Patient)GetPersonById(person3Id), (Doctor)GetPersonById(person8Id), "Dental");
+        AddAppointment((Patient)GetPersonById(person4Id), (Doctor)GetPersonById(person8Id), "Checkup");
+        AddAppointment((Patient)GetPersonById(person5Id), (Doctor)GetPersonById(person9Id), "Checkup");
+        AddAppointment((Patient)GetPersonById(person6Id), (Doctor)GetPersonById(person9Id), "Checkup");
+        AddAppointment((Patient)GetPersonById(person1Id), (Doctor)GetPersonById(person7Id), "flu");
+        AddAppointment((Patient)GetPersonById(person5Id), (Doctor)GetPersonById(person9Id), "Sore Ear");
+        AddAppointment((Patient)GetPersonById(person2Id), (Doctor)GetPersonById(person7Id), "Checkup");
+        AddAppointment((Patient)GetPersonById(person5Id), (Doctor)GetPersonById(person9Id), "Follow Up");
 
-        //// Display appointments and persons
-        //DisplayAppointments();
-        //DisplayPersons();
+        GetPersonById(11111);
+
+        _personRepository.SaveChanges();
+
+        // Display appointments and persons
+        DisplayAppointments();
+        DisplayPeople();
     }
 }

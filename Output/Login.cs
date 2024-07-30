@@ -20,13 +20,13 @@ public static class Login
             BaseConsoleCommands.Clear();
             BaseConsoleCommands.Header("Login");
 
-            if (invalid) { Console.WriteLine("Invalid Credentials, please try again"); }
+            if (invalid) { Console.WriteLine("\nInvalid Credentials, please try again"); }
 
-            Console.WriteLine("Id: ");
+            Console.Write("Id: ");
             var Id = Console.ReadLine();
             if (Id == null) { Id = string.Empty; }
 
-            Console.WriteLine("Password: ");
+            Console.Write("Password: ");
             var pass = string.Empty;
             ConsoleKey key;
             do
@@ -56,7 +56,7 @@ public static class Login
                 continue;
             }
 
-            if (pass != "password")
+            if (pass != user.Password)
             {
                 invalid = true;
                 continue;
@@ -65,7 +65,7 @@ public static class Login
                 break;
             }
         }
-        Console.WriteLine("Valid Credentials");
+        Console.WriteLine("\nValid Credentials");
         Console.ReadKey();
         user.Menu(service);
     }   
