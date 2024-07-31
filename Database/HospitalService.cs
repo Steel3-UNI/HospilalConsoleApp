@@ -17,7 +17,7 @@ public class HospitalService
         _appointmentRepository = appointmentRepository;
     }
 
-    // Method to add a new appointment to the library
+    // Method to add a new appointment to the database
     public void AddAppointment(Patient p, Doctor d, string desc)
     {
         // Create a new Appointment object with provided name
@@ -28,7 +28,7 @@ public class HospitalService
         _appointmentRepository.SaveChanges();
     }
 
-    // Method to add a new person to the library
+    // Method to add a new person to the database
     public int AddPerson(string id, string name, RolesEnum role, string pass = "Test", string email = "", string phone = "", string address = "", int doctorID = 0)
     {
         Person person;
@@ -102,7 +102,7 @@ public class HospitalService
         return _appointmentRepository.GetAllAppointments(); // Retrieve all appointments
     }
 
-    //SartUp function
+    //StartUp function
     public void Run()
     {
         SeedData();
