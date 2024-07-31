@@ -15,6 +15,7 @@ public class Admin : Person
         Password = password;
     }
 
+    //Overridden menu method
     public override void Menu(HospitalService service)
     {
         _service = service;
@@ -72,11 +73,13 @@ public class Admin : Person
         Logout();
     }
 
+    //Unsupported method used by the person class
     public override void ViewDetails()
     {
         throw new NotSupportedException();
     }
 
+    //Lists all patients in the system
     public void ListAllPatients()
     {
         BaseConsoleCommands.Clear();
@@ -103,6 +106,7 @@ public class Admin : Person
         Console.ReadKey();
     }
 
+    //Lists all doctors in the system
     public void ListAllDoctors()
     {
         BaseConsoleCommands.Clear();
@@ -128,6 +132,7 @@ public class Admin : Person
         Console.ReadKey();
     }
 
+    //Lists the details of a person by their ID, if they are of the given role
     public void ListByID(RolesEnum role)
     {
         BaseConsoleCommands.Clear();
@@ -166,6 +171,7 @@ public class Admin : Person
         Console.ReadKey();
     }
 
+    //Adds a person of the given role to the system
     public void Add(RolesEnum role)
     {
         BaseConsoleCommands.Clear();

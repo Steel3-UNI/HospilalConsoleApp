@@ -8,12 +8,14 @@ public class AppointmentRepo : Repository<Appointment>
     { 
     }
 
+    //Gets the database context
     public HospitalContext hospitalContext
     {
-        get { return _context as HospitalContext; }
+        get { return _context; }
     }
 
-    public IEnumerable<Appointment> GetAllAppointments()
+    //Gets all appointments
+    public virtual IEnumerable<Appointment> GetAllAppointments()
     {
         return hospitalContext.Appointments.ToList();
     }

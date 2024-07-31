@@ -4,6 +4,7 @@ namespace HospitalConsoleApp.Output;
 
 public class PrintDoctor
 {
+    //Prints info of a single doctor
     public static void PrintDoctorInfo(Doctor doctor, bool isSelf)
     {
         BaseConsoleCommands.Clear();

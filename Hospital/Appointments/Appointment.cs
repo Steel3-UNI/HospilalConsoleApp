@@ -24,16 +24,16 @@ public class Appointment
 
     public string Description { get; set; }
 
+    //Prints appointment details
     public void Print()
     {
-        Console.WriteLine($"{Doctor.Name,-22} | {Patient.Name,-22} | {Description}");
+        Console.WriteLine($"{Doctor.Name,-22} | {Patient.Name,-24} | {Description}");
     }
 
+    //Sends an email to the patient that booked the appointment
     public void SendEmail()
     {
-        // Replace this with your gmail email address
         var fromEmail = "dotnethospital69@gmail.com";
-        // Replace this with an app password generated at https://myaccount.google.com/apppasswords
         string password = "ehtv ytag haym elmu";
 
         SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
@@ -42,7 +42,6 @@ public class Appointment
             EnableSsl = true
         };
 
-        // Construct a new mail message with the required values
         MailMessage mailMessage = new MailMessage
         {
             From = new MailAddress(fromEmail),
@@ -51,10 +50,8 @@ public class Appointment
             IsBodyHtml = false
         };
 
-        // Add an address to the "to" field
         mailMessage.To.Add(Patient.Email);
 
-        // Send the email
         client.Send(mailMessage);
     }
 

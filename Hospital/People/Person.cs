@@ -27,11 +27,13 @@ public abstract class Person(int id, string name, string email, string phone, st
 
     public abstract void ViewDetails();
 
+    //Retuns to the login screen
     public void Logout()
     {
         Login.Logon(_service);
     }
 
+    //Exits the program
     public void Exit()
     {
         _service.DeleteAllPersons();

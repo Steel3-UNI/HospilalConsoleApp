@@ -8,22 +8,27 @@ public class PersonRepo : Repository<Person>
     public PersonRepo(HospitalContext context) : base(context)
     {
     }
+
+    //Gets database context
     public HospitalContext hospitalContext
     {
-        get { return _context as HospitalContext; }
+        get { return _context; }
     }
 
-    public Person GetPersonById(int id)
+    //returns the person with the given Id, or returns null if not found
+    public virtual Person GetPersonById(int id)
     {
         return hospitalContext.People.SingleOrDefault(p => p.Id == id);
     }
 
-    public IEnumerable<Person> GetAllPeople()
+    //Returns all people in the database
+    public virtual IEnumerable<Person> GetAllPeople()
     {
         return hospitalContext.People.ToList();
     }
 
-    public IEnumerable<Person> GetPeopleOnCondition(Expression<Func<Person, bool>> predicate)
+    //Returns all people in the database that satisfy the given condition
+    public virtual IEnumerable<Person> GetPeopleOnCondition(Expression<Func<Person, bool>> predicate)
     {
         return hospitalContext.People.Where(predicate).ToList();
     }

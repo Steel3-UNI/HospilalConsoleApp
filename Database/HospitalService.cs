@@ -35,7 +35,7 @@ public class HospitalService
         switch (role)
         {
             case RolesEnum.Patient:
-                // Create a new Patient object with provided name
+                // Create a new Patient object with provided details
                 if(doctorID != 0)
                 {
                     person = new Patient(int.Parse(id), name, email, phone, address, pass, doctorID);
@@ -46,11 +46,11 @@ public class HospitalService
                 }
                 break;
             case RolesEnum.Doctor:
-                // Create a new Doctor object with provided name
+                // Create a new Doctor object with provided details
                 person = new Doctor(int.Parse(id), name, email, phone, address, pass);
                 break;
             default:
-                // Create a new Person object with provided name and role
+                // Create a new Admin object with provided name
                 person = new Admin(int.Parse(id), name, pass);
                 break;
         }
@@ -82,26 +82,6 @@ public class HospitalService
         }
     }
 
-    public void DisplayAppointments()
-    {
-        IEnumerable<Appointment> appointments = _appointmentRepository.GetAllAppointments();//Retrieve all appointments
-        Console.WriteLine("Appointments:");
-        foreach (Appointment appointment in appointments)
-        {
-            Console.WriteLine($"- {appointment.AppointmentId}");     // Display each appointment's name
-        }
-    }
-
-    public void DisplayPeople()
-    {
-        IEnumerable<Person> persons = _personRepository.GetAllPeople();        // Retrieve all persons
-        Console.WriteLine("Persons:");
-        foreach (Person person in persons) // Loop through each person
-        {
-            //Console.WriteLine($"- {person.Title} by {person.Appointment.Name}"); // Display each person's title and its appointment's name
-        }
-    }
-
     public Person GetPersonById(int id)
     {
         return _personRepository.GetPersonById(id); // Retrieve a person by its id
@@ -122,6 +102,7 @@ public class HospitalService
         return _appointmentRepository.GetAllAppointments(); // Retrieve all appointments
     }
 
+    //SartUp function
     public void Run()
     {
         SeedData();
@@ -161,9 +142,5 @@ public class HospitalService
         AddAppointment((Patient)GetPersonById(person5Id), (Doctor)GetPersonById(person9Id), "Follow Up");
 
         _personRepository.SaveChanges();
-
-        // Display appointments and persons
-        DisplayAppointments();
-        DisplayPeople();
     }
 }

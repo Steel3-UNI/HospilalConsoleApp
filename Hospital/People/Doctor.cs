@@ -16,6 +16,7 @@ public class Doctor : Person
         Password = password;
     }
 
+    //Override of Base menu method
     public override void Menu(Database.HospitalService service)
     {
         _service = service;
@@ -70,11 +71,13 @@ public class Doctor : Person
         Logout();
     }
 
+    //View Doctors details
     public override void ViewDetails()
     {
         PrintDoctor.PrintDoctorInfo(this, true);
     }
 
+    //View all patients assigned to the doctor
     public void ListPatients()
     {
         BaseConsoleCommands.Clear();
@@ -92,11 +95,13 @@ public class Doctor : Person
         Console.ReadKey();
     }
 
+    //Get all appointments for the doctor
     public IEnumerable<Appointment> GetAppointments()
     {
         return _service.GetAppointments().Where(app => app.Doctor.Id == Id);
     }
 
+    //Check a particular patient
     public void CheckPatient()
     {
         BaseConsoleCommands.Clear();
@@ -123,6 +128,7 @@ public class Doctor : Person
         Console.ReadKey();
     }
 
+    //Function to print the doctor details to a table
     public void PrintSelf()
     {
         Console.Write($"{Name}");
@@ -135,6 +141,7 @@ public class Doctor : Person
         Console.WriteLine();
     }
 
+    //header for the doctor table
     public override string ToString()
     {
         return "Name                | Email Address               | Phone       | Address\n" + "------------------------------------------------------------------------------------------------------";

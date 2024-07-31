@@ -21,6 +21,7 @@ public class Patient : Person
     [ForeignKey("DoctorID")]
     public int DoctorID { get; set; }
 
+    //Override of Base menu method
     public override void Menu(Database.HospitalService service)
     {
         _service = service;
@@ -70,11 +71,13 @@ public class Patient : Person
         Logout();
     }
 
+    //Prints patient details
     public override void ViewDetails()
     {
         PrintPatient.Print(this);
     }
 
+    //Books an appointment
     public void BookAppointment()
     {
         BaseConsoleCommands.Clear();
@@ -114,11 +117,13 @@ public class Patient : Person
         Console.ReadKey();
     }
 
+    //Get all appointments for the patient
     public IEnumerable<Appointment> GetAppointments()
     {
         return _service.GetAppointments().Where(a => a.Patient.Id == Id || a.Doctor.Id == Id);
     }
 
+    //View all appointments for the patient
     public void ViewAppointments()
     {
         BaseConsoleCommands.Clear();
@@ -126,6 +131,7 @@ public class Patient : Person
         ListAppointments.Appointments(this);
     }
 
+    //View the details of the doctor assigned to the patient
     public void ViewDoctorDetails()
     {
         BaseConsoleCommands.Clear();
@@ -140,6 +146,7 @@ public class Patient : Person
         PrintDoctor.PrintDoctorInfo(doctor, false);
     }
 
+    //extension method to assign a doctor to the patient
     private void AddDoctor()
     {
         Console.WriteLine("You are not registered with any doctor! Please choose which doctor you would like to register with.");
@@ -167,8 +174,9 @@ public class Patient : Person
         DoctorID = doctors.ElementAt(id - 1).Id;
     }
 
+    //Prints table header for patients
     public override string ToString()
     {
-        return "Patient             | Doctor              | Email Address               | Phone       | Address\n" +  "--------------------------------------------------------------------------------------------------------------------------";
+        return "Patient             | Doctor              | Email Address               | Phone       | Address\n" +  "------------------------------------------------------------------------------------------------------------------------";
     }
 }

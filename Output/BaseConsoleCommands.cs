@@ -2,16 +2,13 @@
 
 public static class BaseConsoleCommands
 {
+    //Clear console
     public static void Clear()
     {
         Console.Clear();
     }
 
-    public static void Exit()
-    {
-        Clear();
-    }
-
+    //Prints header
     public static void Header(string menuName)
     {
         string header = " ______________________________________________________\n" +

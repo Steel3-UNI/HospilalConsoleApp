@@ -3,6 +3,8 @@ using HospitalConsoleApp.Hospital.People;
 
 namespace HospitalConsoleApp.Output;
 
+
+//Login page
 public static class Login
 {
     public static void Logon(HospitalService service)
@@ -24,6 +26,7 @@ public static class Login
             Console.Write("Password: ");
             var pass = string.Empty;
             ConsoleKey key;
+            //Password hashing
             do
             {
                 var keyInfo = Console.ReadKey(intercept: true);

@@ -4,6 +4,7 @@ namespace HospitalConsoleApp.Output;
 
 public class PrintPatient
 {
+    //prints info of a single patient
     public static void Print(Patient p)
     {
         BaseConsoleCommands.Clear();
@@ -20,6 +21,7 @@ public class PrintPatient
         Console.ReadKey();
     }
 
+    //prints patient details to a table
     public static void Print(Patient p, string doctorName)
     {
         Console.Write($"{p.Name}");

@@ -6,10 +6,11 @@ namespace HospitalConsoleApp.Database;
 
 public class HospitalContext : DbContext
 {
-    public DbSet<Appointment> Appointments { get; set; }
-    public DbSet<Person> People { get; set; }
+    public virtual DbSet<Appointment> Appointments { get; set; }
+    public virtual DbSet<Person> People { get; set; }
     public string DbPath { get; }
 
+    //Constructor that configures the db Context
     public HospitalContext()
     {
         var folder = Environment.SpecialFolder.LocalApplicationData;
@@ -18,6 +19,7 @@ public class HospitalContext : DbContext
         Console.WriteLine("Database path:" + DbPath);
     }
 
+    //Tells the context to use SQLite as the database provider
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // Configures the context to use SQLite as the database provider

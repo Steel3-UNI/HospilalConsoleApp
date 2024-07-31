@@ -5,6 +5,7 @@ namespace HospitalConsoleApp.Output;
 
 public class ListAppointments
 {
+    //Each method lists the appointments for the respective person with the help of the AppointmentsBase method
     public static void Appointments(Patient patient)
     {
         BaseConsoleCommands.Clear();
@@ -36,6 +37,7 @@ public class ListAppointments
         AppointmentsBase(appointments);
     }
 
+    //extension method
     static void AppointmentsBase(IEnumerable<Appointment> appointments)
     {
         Console.WriteLine();
